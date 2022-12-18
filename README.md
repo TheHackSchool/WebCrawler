@@ -54,3 +54,27 @@ A spider to crawl the entire web. Beware, spider supremacy is here.
 - [ ] Kafka queues to add between URL frontier service and fetcher module. This will store URLs in a topic based on URL hostname.
 - [ ] Kafka queue between fetcher and HTML parser.
 - [ ] Kafka queue between parser and URL filter.
+
+
+
+## Commands for kafka : 
+1. Zookeeper start
+bin/zookeeper-server-start.sh config/zookeeper.properties
+2. Kafka server start
+bin/kafka-server-start.sh config/server.properties
+3. If topic doesnt exist then create it with this command (top with crawler-urls created).
+bin/kafka-topics.sh --create --topic crawler-urls --bootstrap-server localhost:9092
+4. Producer attached to this topic added
+bin/kafka-console-producer.sh --topic crawler-urls --bootstrap-server localhost:9092 
+5. Consumer listening to topic crawler-urls up. 
+bin/kafka-console-consumer.sh --topic crawler-urls --from-beginning --bootstrap-server localhost:9092
+
+
+MYSQL : 
+1. starting the sql server 
+mysql.server start        
+
+2. To connect to sql 
+mysql -u root       
+
+
