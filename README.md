@@ -5,26 +5,71 @@ A spider to crawl the entire web. Beware, spider supremacy is here.
 
 ## Seed URL Service
 
+### Responsibilities
 1. CRUD operations on the Seed URLs which are stored in a DB.
 2. DB will be RDBMS. Tables - "urls", "categories".
 3. Invoke a web crawler
 4. Backend for frontend (BFF)
 
+### APIs
+- POST /api/v1/webcrawler/seedurls
+```json
+{
+    "url": "url",
+    "category": "category"
+}
+```
+- GET /api/v1/webcrawler/seedurls/all
+- PATCH /api/v1/webcrawler/seedurls
+```json
+{
+    "id": "123",
+    "url": "<new-url>",
+    "category": "<new-category>"
+}
+```
+- DELETE /api/v1/webcrawler/seedurls/{id}
+- POST /api/v1/webcrawler/invoke
+
 ## URL Frontier Service
 
+### Responsibilities
 1. Reads Seed URLs from the **Seed URL Service** request.
 2. Create one queue for every category of the seed URL. We will use Apache Kafka for it or other relevant queuing service like Rabbit MQ.
 3. This service will act as the producer for the Kafka queue.
 
+### APIs
+- POST /api/v1/webcrawler/invoke
+```json
+{
+    "urls": [
+        {
+            "url": "some url",
+            "category": "category of the url"
+        },
+        {
+            "url": "some url",
+            "category": "category of the url"
+        },
+        {
+            "url": "some url",
+            "category": "category of the url"
+        }
+    ]
+}
+```
+
 ## URL Fetcher Service
 
+### Responsibilities
 1. This will act as the consumer of the Kafka queue
 2. It will call the respective URL (we will use thread pool for this purpose)
 3. This will interact with the DNS Resolver to convert URL to IP address.
 4. Since DNS resolver is a bottleneck, with time, we will create our own DNS resolver service with the data accumulated over time.
 5. We will honor robots.txt of different websites, and we will cache it. There should be a scheduler which should update the cached robots.txt
 6. Server side rendering will also be a part of this module.
-7. There will be Kafka between fetcher and parser module
+7. There will be Kafka between fetcher and parser module.
+
 
 ## HTML Parser + Content Deduplication + URL Extractor
 
