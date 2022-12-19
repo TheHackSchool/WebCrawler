@@ -92,7 +92,7 @@ A spider to crawl the entire web. Beware, spider supremacy is here.
 
 ## Setup required
 
-- [ ] RDBMS for Seed URL
+- [x] RDBMS for Seed URL
 - [ ] NoSQL for storing HTML content
 - [ ] Key-Value datastore for content dedup checksums
 - [ ] Key-Value datastore for URL dedup checksums
@@ -117,9 +117,9 @@ bin/kafka-console-consumer.sh --topic crawler-urls --from-beginning --bootstrap-
 
 MYSQL : 
 1. starting the sql server 
-mysql.server start        
+- mysql.server start        
 
 2. To connect to sql 
-mysql -u root       
+- mysql -u root       
 
 
